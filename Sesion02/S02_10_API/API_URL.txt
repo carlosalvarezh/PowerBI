@@ -1,0 +1,15 @@
+URL: https://www.football-data.org/
+
+Competition / Teams: https://www.football-data.org/documentation/quickstart
+
+curl -X GET http://api.football-data.org/v4/competitions/WC/teams
+
+URL Token (llave de autorización): https://www.football-data.org/documentation/api
+
+Request Headers (nombre del token, no es la llave): X-Auth-Token
+
+Este nombre se lleva al PWBI en el cajón izquierdo de "Parámetros de encabezado de solicitud HTTP (Opcional)"
+
+Para obtener la llave se debe registrar en la página. Una vez registrado le llega un mensaje de correo con el Token.
+
+Your API token: ################################

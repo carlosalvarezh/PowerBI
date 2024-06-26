@@ -1,0 +1,5 @@
+Fecha,Producto,Región,Cantidad
+01/01/2022,ProductoA,Norte,10
+01/01/2022,ProductoB,Sur,15
+02/01/2022,ProductoA,Norte,20
+02/01/2022,ProductoB,Sur,25
