@@ -1,0 +1,24 @@
+(años) =>
+
+let
+    Origen = Web.BrowserContents("https://www.cuandoenelmundo.com/calendario/" & Pais& "/" & años),
+
+    // Extraer datos del primer semestre
+    #"Tabla extraída a partir de HTML1" = Html.Table(Origen, {{"Column1", "TABLE.hdays:nth-child(2) > * > TR > :nth-child(1)"}, {"Column2", "TABLE.hdays:nth-child(2) > * > TR > :nth-child(2)"}, {"Column3", "TABLE.hdays:nth-child(2) > * > TR > :nth-child(3)"}}, [RowSelector="TABLE.hdays:nth-child(2) > * > TR"]),
+    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Tabla extraída a partir de HTML1",{{"Column1", Int64.Type}, {"Column2", type text}, {"Column3", type text}}),
+    #"Columnas con nombre cambiado1" = Table.RenameColumns(#"Tipo cambiado1",{{"Column1", "Dia"}, {"Column2", "Mes"}, {"Column3", "Nombre"}}),
+    
+    // Extraer datos del segundo semestre
+    #"Tabla extraída a partir de HTML2" = Html.Table(Origen, {{"Column1", "TABLE.hdays:nth-child(3) > * > TR > :nth-child(1)"}, {"Column2", "TABLE.hdays:nth-child(3) > * > TR > :nth-child(2)"}, {"Column3", "TABLE.hdays:nth-child(3) > * > TR > :nth-child(3)"}}, [RowSelector="TABLE.hdays:nth-child(3) > * > TR"]),
+    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Tabla extraída a partir de HTML2",{{"Column1", Int64.Type}, {"Column2", type text}, {"Column3", type text}}),
+    #"Columnas con nombre cambiado2" = Table.RenameColumns(#"Tipo cambiado2",{{"Column1", "Dia"}, {"Column2", "Mes"}, {"Column3", "Nombre"}}),
+    
+    // Combinar ambas tablas
+    FestivosAnuales = Table.Combine({#"Columnas con nombre cambiado1", #"Columnas con nombre cambiado2"})
+in
+    FestivosAnuales
+
+
+Modelo de Datos
+#Clientes = DISTINCTCOUNT(Clientes4[COD Cliente])
+#Clientes 2 = CALCULATE([#Clientes], CROSSFILTER(data[COD Cliente], Clientes4[COD Cliente],Both))
