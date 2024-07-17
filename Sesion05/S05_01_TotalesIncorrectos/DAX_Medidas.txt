@@ -1,0 +1,34 @@
+// Monto Condicional
+Monto Condicional = 
+IF(
+    SUM(fctVentas[Monto]) > 850, 
+    SUM(fctVentas[Monto]),
+    BLANK()
+)
+
+// Monto Condicional Rev
+Monto Condicional Rev = 
+""
+
+// Monto de Ventas
+Monto de Ventas = SUM(fctVentas[Monto])
+
+// Monto de Ventas Inc
+Monto de Ventas Inc = SUM(fctVentas[Monto]) + 100
+
+// Monto de Ventas Inc Rev
+Monto de Ventas Inc Rev = 
+""""
+
+// Nro Registros
+Nro Registros = COUNTROWS(fctVentas)
+
+//Numero de Clientes
+Numero de Clientes = DISTINCTCOUNT(fctVentas[ID_Cliente])
+
+// Numero de Clientes Rev
+Numero de Clientes Rev = 
+""
+
+// Unidades Vendidas
+Unidades Vendidas = SUM(fctVentas[Unidades])
