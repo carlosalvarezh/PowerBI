@@ -1,0 +1,120 @@
+// Iconos
+FlechaAbajo = unichar(8600)
+FlechaArriba = UNICHAR(8599)
+
+// Costo
+Costo = SUM(Facturas[Cost])
+
+Costo_LY = CALCULATE(
+    [Costo],
+    SAMEPERIODLASTYEAR(
+        Calendario[Date]
+    )
+)
+
+Costo_Var = [Costo] - [Costo_LY]
+
+Costo_Var_% = DIVIDE([Costo_Var], [Costo_LY])
+
+Var_Costo_Texto = 
+    VAR _Texto_Variacion = 
+        FORMAT([Costo_Var], "$0,00") & " (" & FORMAT([Costo_Var_%], "0.0%") & ") "
+    VAR _Texto_Resultado =
+        SWITCH(True(),
+        [Costo_Var] > 0, _Texto_Variacion & [FlechaArriba],
+        [Costo_Var] < 0, _Texto_Variacion & [FlechaAbajo]
+    )
+RETURN
+_Texto_Resultado
+
+// Margen
+Margen = [Ventas] - [Costo]
+
+Margen_LY = 
+CALCULATE(
+    [Margen],
+    SAMEPERIODLASTYEAR(
+        Calendario[Date]
+    )
+)
+
+Margen_Var = [Margen] - [Margen_LY]
+
+Margen_Var_% = DIVIDE([Margen_Var], [Margen_LY])
+
+Var_Margen_Texto = 
+    VAR _Texto_Variacion = 
+        FORMAT([Margen_Var], "$0,00") & " (" & FORMAT([Margen_Var_%], "0.0%") & ") "
+    VAR _Texto_Resultado =
+        SWITCH(True(),
+        [Margen_Var] > 0, _Texto_Variacion & [FlechaArriba],
+        [Margen_Var] < 0, _Texto_Variacion & [FlechaAbajo]
+    )
+RETURN
+_Texto_Resultado
+
+// Margen %
+Margen_% = DIVIDE([Margen], [Ventas])
+
+Margen_%_LY = 
+CALCULATE(
+    [Margen_%],
+    SAMEPERIODLASTYEAR(
+        Calendario[Date]
+    )
+)
+
+Margen_%_Var = [Margen_%] - [Margen_%_LY]
+
+// Ordenes
+Ordenes = DISTINCTCOUNT(Facturas[OrderID])
+
+Ordenes_LY = 
+CALCULATE(
+    [Ordenes],
+    SAMEPERIODLASTYEAR(
+        Calendario[Date]
+    )
+)
+
+Ordenes_Var = [Ordenes] - [Ordenes_LY]
+
+Ordenes_Var_% = DIVIDE([Ordenes_Var], [Ordenes_LY])
+
+Var_Ordenes_Texto = 
+    VAR _Texto_Variacion = 
+        FORMAT([Ordenes_Var], "$0,00") & " (" & FORMAT([Ordenes_Var_%], "0.0%") & ") "
+    VAR _Texto_Resultado =
+        SWITCH(True(),
+        [Ordenes_Var] > 0, _Texto_Variacion & [FlechaArriba],
+        [Ordenes_Var] < 0, _Texto_Variacion & [FlechaAbajo]
+    )
+RETURN
+_Texto_Resultado
+
+// Ventas
+Var_Ventas_Texto = 
+    VAR _Texto_Variacion = 
+        FORMAT([Ventas_Var], "$0,00") & " (" & FORMAT([Ventas_Var_%], "0.0%") & ") "
+    VAR _Texto_Resultado =
+        SWITCH(True(),
+        [Ventas_Var] > 0, _Texto_Variacion & [FlechaArriba],
+        [Ventas_Var] < 0, _Texto_Variacion & [FlechaAbajo]
+    )
+RETURN
+_Texto_Resultado
+
+Ventas = SUM(Facturas[ExtendedPrice])
+
+Ventas_LY = 
+CALCULATE(
+    [Ventas],
+    SAMEPERIODLASTYEAR(
+        Calendario[Date]
+    )
+)
+
+Ventas_Var = [Ventas] - [Ventas_LY]
+
+Ventas_Var_% = DIVIDE([Ventas_Var], [Ventas_LY])
+
